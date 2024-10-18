@@ -24,8 +24,9 @@ namespace ExamenLenguajes.Helpers
 
 		private void MapsForRequests()
 		{
-			CreateMap<RequestEntity, RequestDto>();
-			CreateMap<RequestCreateDto, RequestEntity>();
+			CreateMap<RequestEntity, RequestDto>()
+				.ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.Employee.FirstName));
+            CreateMap<RequestCreateDto, RequestEntity>();
 			CreateMap<RequestEditDto, RequestEntity>();
 		}
 

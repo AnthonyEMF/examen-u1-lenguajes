@@ -13,17 +13,20 @@ namespace ExamenLenguajes.Services
 	public class UsersService : IUsersService
 	{
 		private readonly ExamenLenguajesContext _context;
+		private readonly IAuditService _auditService;
 		private readonly IMapper _mapper;
 		private readonly ILogger _logger;
 		private readonly int PAGE_SIZE;
 
 		public UsersService(
             ExamenLenguajesContext context,
+			IAuditService auditService,
             IMapper mapper,
             ILogger<UsersService> logger,
             IConfiguration configuration)
         {
 			this._context = context;
+			this._auditService = auditService;
 			this._mapper = mapper;
 			this._logger = logger;
 			PAGE_SIZE = configuration.GetValue<int>("PageSize");
@@ -71,7 +74,7 @@ namespace ExamenLenguajes.Services
 			};
 		}
 
-		public async Task<ResponseDto<UserDto>> GetUserByIdAsync(Guid id)
+		public async Task<ResponseDto<UserDto>> GetUserByIdAsync(string id)
 		{
 			var userEntity = await _context.Users.FindAsync(id);
 			if (userEntity == null)
@@ -99,6 +102,12 @@ namespace ExamenLenguajes.Services
 		{
 			var userEntity = _mapper.Map<UserEntity>(dto);
 			userEntity.Id = Guid.NewGuid().ToString();
+			userEntity.UserName = dto.Email;
+			userEntity.NormalizedUserName = dto.Email.ToUpper();
+			userEntity.NormalizedEmail = dto.Email.ToUpper();
+			userEntity.CreatedDate = DateTime.Now;
+			//userEntity.CreatedBy = _auditService.GetUserId();
+
 
 			var result = await _context.Users.AddAsync(userEntity);
 			await _context.SaveChangesAsync();
@@ -113,7 +122,7 @@ namespace ExamenLenguajes.Services
 			};
 		}
 
-		public async Task<ResponseDto<UserDto>> EditAsync(UserEditDto dto, Guid id)
+		public async Task<ResponseDto<UserDto>> EditAsync(UserEditDto dto, string id)
 		{
 			var userEntity = await _context.Users.FindAsync(id);
 			if (userEntity == null)
@@ -136,6 +145,8 @@ namespace ExamenLenguajes.Services
 			userEntity.DNI = dto.DNI;
 			userEntity.Position = dto.Position;
 			userEntity.DepartmentId = dto.DepartmentId;
+			userEntity.UpdatedDate = DateTime.Now;
+			//userEntity.UpdatedBy = _auditService.GetUserId();
 
 			await _context.SaveChangesAsync();
 
@@ -149,7 +160,7 @@ namespace ExamenLenguajes.Services
 			};
 		}
 
-		public async Task<ResponseDto<UserDto>> DeleteAsync(Guid id)
+		public async Task<ResponseDto<UserDto>> DeleteAsync(string id)
 		{
 			var userEntity = await _context.Users.FindAsync(id);
 			if (userEntity == null)
@@ -168,7 +179,7 @@ namespace ExamenLenguajes.Services
 
 			return new ResponseDto<UserDto>
 			{
-				StatusCode = 204,
+				StatusCode = 200,
 				Status = true,
 				Message = MessagesConstant.DELETE_SUCCESS,
 				Data = null

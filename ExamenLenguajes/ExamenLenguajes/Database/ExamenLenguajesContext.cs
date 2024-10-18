@@ -35,6 +35,7 @@ namespace ExamenLenguajes.Database
 			// Configurations
 			modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
 			modelBuilder.ApplyConfiguration(new RequestConfiguration());
+			modelBuilder.ApplyConfiguration(new UserConfiguration());
 
 			// Set FKs OnRestrict
 			var eTypes = modelBuilder.Model.GetEntityTypes();

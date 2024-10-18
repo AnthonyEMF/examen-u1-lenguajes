@@ -5,7 +5,7 @@ namespace ExamenLenguajes.Dtos.Requests
 {
     public class RequestCreateDto
     {
-        public Guid EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
 
         [Required(ErrorMessage = "El {0} es requerido.")]
         [StringLength(20)]

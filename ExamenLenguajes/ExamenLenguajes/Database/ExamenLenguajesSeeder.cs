@@ -1,6 +1,8 @@
 ﻿using ExamenLenguajes.Constants;
+using ExamenLenguajes.Database.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace ExamenLenguajes.Database
 {
@@ -120,6 +122,7 @@ namespace ExamenLenguajes.Database
 
 		//			for (int i = 0; i < requests.Count; i++)
 		//			{
+		//				requests[i].EmployeeId = user.Id;
 		//				requests[i].CreatedBy = user.Id;
 		//				requests[i].CreatedDate = DateTime.Now;
 		//				requests[i].UpdatedBy = user.Id;

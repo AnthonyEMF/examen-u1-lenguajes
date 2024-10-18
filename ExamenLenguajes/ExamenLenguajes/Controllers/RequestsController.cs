@@ -1,13 +1,16 @@
-﻿using ExamenLenguajes.Dtos.Common;
+﻿using ExamenLenguajes.Constants;
+using ExamenLenguajes.Dtos.Common;
 using ExamenLenguajes.Dtos.Requests;
 using ExamenLenguajes.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExamenLenguajes.Controllers
 {
     [ApiController]
-    [Route("api/requests")]        
-    public class RequestsController : ControllerBase
+    [Route("api/requests")]
+	[Authorize(AuthenticationSchemes = "Bearer")]
+	public class RequestsController : ControllerBase
     {
         private readonly IRequestsService _requestsService;
 
@@ -17,6 +20,7 @@ namespace ExamenLenguajes.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<ResponseDto<List<RequestDto>>>> GetAll(string searchTerm = "", int page = 1)
         {
             var response = await _requestsService.GetAllRequestsAsync(searchTerm, page);
@@ -24,6 +28,7 @@ namespace ExamenLenguajes.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<ResponseDto<RequestDto>>> Get(Guid id)
         {
             var response = await _requestsService.GetRequestByIdAsync(id);
@@ -31,21 +36,24 @@ namespace ExamenLenguajes.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ResponseDto<RequestDto>>> Create(RequestCreateDto dto)
+		[Authorize(Roles = $"{RolesConstant.EMPLOYEE}")]
+		public async Task<ActionResult<ResponseDto<RequestDto>>> Create(RequestCreateDto dto)
         {
             var response = await _requestsService.CreateRequestAsync(dto);
             return StatusCode(response.StatusCode, response);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ResponseDto<RequestDto>>> Edit(RequestEditDto dto, Guid id)
+		[Authorize(Roles = $"{RolesConstant.EMPLOYEE}")]
+		public async Task<ActionResult<ResponseDto<RequestDto>>> Edit(RequestEditDto dto, Guid id)
         {
             var response = await _requestsService.EditRequestAsync(dto, id);
             return StatusCode(response.StatusCode, response);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ResponseDto<RequestDto>>> Delete(Guid id)
+		[Authorize(Roles = $"{RolesConstant.EMPLOYEE}")]
+		public async Task<ActionResult<ResponseDto<RequestDto>>> Delete(Guid id)
         {
             var response = await _requestsService.DeleteRequestAsync(id);
             return StatusCode(response.StatusCode, response);

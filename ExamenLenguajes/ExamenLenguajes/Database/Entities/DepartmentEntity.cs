@@ -10,7 +10,7 @@ namespace ExamenLenguajes.Database.Entities
         [Display(Name = "Nombre")]
         [Required(ErrorMessage = "El {0} del departamento es requerido.")]
         [StringLength(50)]
-        [Column("department")]
+        [Column("name")]
         public string Name { get; set; }
 
         public virtual IdentityUser CreatedByUser { get; set; }

@@ -6,6 +6,23 @@ meta {
 
 post {
   url: {{PATH}}/requests
-  body: none
-  auth: none
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{TOKEN}}
+}
+
+body:json {
+  {
+    "employeeId": "cf2b4538-e282-4ed3-a3f4-9b5f3169c907",
+    "requestType": "POR HORAS",
+    "startDate": "2024-10-18T12:20:10.005Z",
+    "endDate": "2024-10-18T12:20:10.005Z",
+    "startHour": "2024-10-18T12:20:10.005Z",
+    "endHour": "2024-10-18T12:20:10.005Z",
+    "reason": "Cita medica",
+    "status": "aprobada"
+  }
 }

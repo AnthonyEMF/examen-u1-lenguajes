@@ -61,7 +61,7 @@ namespace ExamenLenguajes.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    department = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     created_by = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
                     created_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updated_by = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
@@ -89,8 +89,6 @@ namespace ExamenLenguajes.Migrations
                     password = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: true),
                     position = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     department_id = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    UpdatedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -117,15 +115,15 @@ namespace ExamenLenguajes.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_users_users_CreatedByUserId",
-                        column: x => x.CreatedByUserId,
+                        name: "FK_users_users_created_by",
+                        column: x => x.created_by,
                         principalSchema: "security",
                         principalTable: "users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_users_users_UpdatedByUserId",
-                        column: x => x.UpdatedByUserId,
+                        name: "FK_users_users_updated_by",
+                        column: x => x.updated_by,
                         principalSchema: "security",
                         principalTable: "users",
                         principalColumn: "Id",
@@ -322,10 +320,10 @@ namespace ExamenLenguajes.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_users_CreatedByUserId",
+                name: "IX_users_created_by",
                 schema: "security",
                 table: "users",
-                column: "CreatedByUserId");
+                column: "created_by");
 
             migrationBuilder.CreateIndex(
                 name: "IX_users_department_id",
@@ -334,10 +332,10 @@ namespace ExamenLenguajes.Migrations
                 column: "department_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_users_UpdatedByUserId",
+                name: "IX_users_updated_by",
                 schema: "security",
                 table: "users",
-                column: "UpdatedByUserId");
+                column: "updated_by");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",

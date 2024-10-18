@@ -43,7 +43,7 @@ namespace ExamenLenguajes.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
-                        .HasColumnName("department");
+                        .HasColumnName("name");
 
                     b.Property<string>("UpdatedBy")
                         .HasMaxLength(450)
@@ -352,9 +352,6 @@ namespace ExamenLenguajes.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("created_by");
 
-                    b.Property<string>("CreatedByUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_date");
@@ -398,18 +395,15 @@ namespace ExamenLenguajes.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("updated_by");
 
-                    b.Property<string>("UpdatedByUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_date");
 
-                    b.HasIndex("CreatedByUserId");
+                    b.HasIndex("CreatedBy");
 
                     b.HasIndex("DepartmentId");
 
-                    b.HasIndex("UpdatedByUserId");
+                    b.HasIndex("UpdatedBy");
 
                     b.ToTable("users", "security");
 
@@ -512,7 +506,7 @@ namespace ExamenLenguajes.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "CreatedByUser")
                         .WithMany()
-                        .HasForeignKey("CreatedByUserId")
+                        .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ExamenLenguajes.Database.Entities.DepartmentEntity", "Department")
@@ -523,7 +517,7 @@ namespace ExamenLenguajes.Migrations
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdatedByUser")
                         .WithMany()
-                        .HasForeignKey("UpdatedByUserId")
+                        .HasForeignKey("UpdatedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("CreatedByUser");

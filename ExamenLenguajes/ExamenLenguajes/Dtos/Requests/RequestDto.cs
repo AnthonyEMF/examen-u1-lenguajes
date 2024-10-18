@@ -6,7 +6,7 @@ namespace ExamenLenguajes.Dtos.Requests
     public class RequestDto
     {
         public Guid Id { get; set; }
-        public Guid EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
         public string EmployeeName { get; set; }
         public string RequestType { get; set; }
         public DateTime StartDate { get; set; }

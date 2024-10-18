@@ -37,6 +37,7 @@ namespace ExamenLenguajes
 			services.AddTransient<IAuditService, AuditService>();
 			services.AddTransient<IDepartmentsService, DepartmentsService>();
 			services.AddTransient<IRequestsService, RequestsService>();
+			services.AddTransient<IUsersService, UsersService>();
 
 			// Add Identity
 			services.AddIdentity<IdentityUser, IdentityRole>(options =>

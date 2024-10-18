@@ -1,4 +1,5 @@
-﻿using ExamenLenguajes.Dtos.Auth;
+﻿using ExamenLenguajes.Constants;
+using ExamenLenguajes.Dtos.Auth;
 using ExamenLenguajes.Dtos.Common;
 using ExamenLenguajes.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -25,9 +26,53 @@ namespace ExamenLenguajes.Services
 			this._configuration = configuration;
 		}
 
-        public Task<ResponseDto<LoginResponseDto>> LoginAsync(LoginDto dto)
+        public async Task<ResponseDto<LoginResponseDto>> LoginAsync(LoginDto dto)
 		{
-			throw new NotImplementedException();
+			var result = await _signInManager.
+				PasswordSignInAsync(dto.Email,
+									dto.Password,
+									isPersistent: false,
+									lockoutOnFailure: false);
+
+			if (result.Succeeded)
+			{
+				var userEntity = await _userManager.FindByEmailAsync(dto.Email);
+
+				var authClaims = new List<Claim>
+				{
+					new Claim(ClaimTypes.Email, userEntity.Email),
+					new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+					new Claim("UserId", userEntity.Id),
+				};
+
+				var userRoles = await _userManager.GetRolesAsync(userEntity);
+				foreach (var role in userRoles)
+				{
+					authClaims.Add(new Claim(ClaimTypes.Role, role));
+				}
+
+				var jwtToken = GetToken(authClaims);
+
+				return new ResponseDto<LoginResponseDto>
+				{
+					StatusCode = 200,
+					Status = true,
+					Message = MessagesConstant.LOGIN_SUCCESS,
+					Data = new LoginResponseDto
+					{
+						Email = userEntity.Email,
+						Token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
+						TokenExpiration = jwtToken.ValidTo,
+					}
+				};
+			}
+
+			return new ResponseDto<LoginResponseDto>
+			{
+				Status = false,
+				StatusCode = 401,
+				Message = MessagesConstant.LOGIN_ERROR
+			};
 		}
 
 		private JwtSecurityToken GetToken(List<Claim> authClaims)

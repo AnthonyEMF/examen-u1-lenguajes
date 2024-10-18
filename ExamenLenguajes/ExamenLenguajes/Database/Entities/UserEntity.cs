@@ -7,9 +7,6 @@ namespace ExamenLenguajes.Database.Entities
     [Table("users", Schema = "security")]
     public class UserEntity : IdentityUser
     {
-		[Key]
-		public override string Id { get; set; } = Guid.NewGuid().ToString();
-
 		[StringLength(450)]
         [Column("created_by")]
         public string CreatedBy { get; set; }

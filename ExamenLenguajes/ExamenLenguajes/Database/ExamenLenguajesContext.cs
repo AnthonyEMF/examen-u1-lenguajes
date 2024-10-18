@@ -1,4 +1,5 @@
-﻿using ExamenLenguajes.Database.Entities;
+﻿using ExamenLenguajes.Database.Configuration;
+using ExamenLenguajes.Database.Entities;
 using ExamenLenguajes.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -32,7 +33,8 @@ namespace ExamenLenguajes.Database
 			modelBuilder.Entity<IdentityUserToken<string>>().ToTable("users_tokens");
 
 			// Configurations
-			//modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+			//modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
+			//modelBuilder.ApplyConfiguration(new RequestConfiguration());
 
 			// Set FKs OnRestrict
 			var eTypes = modelBuilder.Model.GetEntityTypes();
@@ -78,6 +80,7 @@ namespace ExamenLenguajes.Database
 
 		// Entities
 
-		//public DbSet<CategoryEntity> Categories { get; set; }
+		//public DbSet<DepartmentEntity> Departments { get; set; }
+		//public DbSet<RequestEntity> Requests { get; set; }
 	}
 }

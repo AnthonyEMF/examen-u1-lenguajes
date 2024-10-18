@@ -1,0 +1,24 @@
+[
+  {
+    "id": "5c0af64f-f365-4100-ae1c-88a764971e39",
+    "employeeId": "9fb2ad4b-f95f-4d9a-ae05-769773006ec4",
+    "requestType": "POR HORAS",
+    "startDate": "2024-10-20",
+    "endDate": "2024-10-20",
+    "startHour": "2024-10-20T9:00:00",
+    "endHour": "2024-10-20T12:00:00",
+    "reason": "Cita medica",
+    "state": "APROBADO"
+  },
+  {
+    "id": "5c0af64f-f365-4100-ae1c-88a764971e39",
+    "employeeId": "9fb2ad4b-f95f-4d9a-ae05-769773006ec4",
+    "requestType": "POR DÍAS",
+    "startDate": "2024-10-21",
+    "endDate": "2024-10-23",
+    "startHour": "",
+    "endHour": "",
+    "reason": "Boda prima",
+    "state": "RECHAZADO"
+  }
+]

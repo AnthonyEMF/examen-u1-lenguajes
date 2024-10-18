@@ -8,7 +8,7 @@ namespace ExamenLenguajes.Database.Entities
     public class RequestEntity : BaseEntity
     {
         [Column("employee_id")]
-        public Guid EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
 
         [ForeignKey(nameof(EmployeeId))]
         public virtual UserEntity Employee {  get; set; }
@@ -48,7 +48,6 @@ namespace ExamenLenguajes.Database.Entities
         [Column("status")]
         public string Status { get; set; }
 
-        public virtual ICollection<UserEntity> Users { get; set; }
         public virtual IdentityUser CreatedByUser { get; set; }
         public virtual IdentityUser UpdatedByUser { get; set; }
     }

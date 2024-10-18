@@ -17,7 +17,11 @@ namespace ExamenLenguajes.Dtos.Users
         [StringLength(100)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "El {0} es requerido.")]
+		[Required(ErrorMessage = "El {0} es requerido.")]
+		[StringLength(100)]
+		public string Password { get; set; }
+
+		[Required(ErrorMessage = "El {0} es requerido.")]
         [StringLength(13)]
         public string DNI { get; set; }
 

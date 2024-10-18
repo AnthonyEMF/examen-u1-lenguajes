@@ -33,8 +33,8 @@ namespace ExamenLenguajes.Database
 			modelBuilder.Entity<IdentityUserToken<string>>().ToTable("users_tokens");
 
 			// Configurations
-			//modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
-			//modelBuilder.ApplyConfiguration(new RequestConfiguration());
+			modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
+			modelBuilder.ApplyConfiguration(new RequestConfiguration());
 
 			// Set FKs OnRestrict
 			var eTypes = modelBuilder.Model.GetEntityTypes();
@@ -78,9 +78,8 @@ namespace ExamenLenguajes.Database
 			return base.SaveChangesAsync(cancellationToken);
 		}
 
-		// Entities
-
-		//public DbSet<DepartmentEntity> Departments { get; set; }
-		//public DbSet<RequestEntity> Requests { get; set; }
+		public DbSet<DepartmentEntity> Departments { get; set; }
+		public DbSet<RequestEntity> Requests { get; set; }
+		public DbSet<UserEntity> Users { get; set; }
 	}
 }

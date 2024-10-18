@@ -36,7 +36,7 @@ namespace ExamenLenguajes.Services
 		{
 			int startIndex = (page - 1) * PAGE_SIZE;
 
-			var usersEntityQuery = _context.Users.AsQueryable();
+			var usersEntityQuery = _context.Users.Include(u => u.Requests).AsQueryable();
 
 			if (!string.IsNullOrEmpty(searchTerm))
 			{
@@ -76,7 +76,7 @@ namespace ExamenLenguajes.Services
 
 		public async Task<ResponseDto<UserDto>> GetUserByIdAsync(string id)
 		{
-			var userEntity = await _context.Users.FindAsync(id);
+			var userEntity = await _context.Users.Include(u => u.Requests).FirstOrDefaultAsync(u => u.Id == id);
 			if (userEntity == null)
 			{
 				return new ResponseDto<UserDto>

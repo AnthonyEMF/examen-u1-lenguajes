@@ -26,8 +26,5 @@ namespace ExamenLenguajes.Dtos.Requests
         [Required(ErrorMessage = "El {0} es requerido.")]
         [StringLength(100)]
         public string Reason { get; set; }
-
-        [StringLength(20)]
-        public string Status { get; set; }
     }
 }

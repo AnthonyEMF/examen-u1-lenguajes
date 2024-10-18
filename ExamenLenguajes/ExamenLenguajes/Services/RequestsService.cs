@@ -157,22 +157,7 @@ namespace ExamenLenguajes.Services
                     };
                 }
 
-                if (dto.EmployeeId.ToString() != requestEntity.EmployeeId)
-                {
-                    var organizer = await _context.Users.FindAsync(dto.EmployeeId);
-                    if (organizer == null)
-                    {
-                        return new ResponseDto<RequestDto>
-                        {
-                            StatusCode = 404,
-                            Status = false,
-                            Message = $"EmployeeId: {MessagesConstant.RECORD_NOT_FOUND}"
-                        };
-                    }
-                    requestEntity.EmployeeId = dto.EmployeeId.ToString();
-                }
-
-                _mapper.Map(dto, requestEntity);
+                requestEntity.Status = dto.Status;
 
                 _context.Requests.Update(requestEntity);
                 await _context.SaveChangesAsync();

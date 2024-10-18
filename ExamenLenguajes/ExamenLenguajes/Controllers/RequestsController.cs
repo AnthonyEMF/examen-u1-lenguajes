@@ -20,8 +20,8 @@ namespace ExamenLenguajes.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult<ResponseDto<List<RequestDto>>>> GetAll(string searchTerm = "", int page = 1)
+		[Authorize(Roles = $"{RolesConstant.HUMAN_RESOURCES}")]
+		public async Task<ActionResult<ResponseDto<List<RequestDto>>>> GetAll(string searchTerm = "", int page = 1)
         {
             var response = await _requestsService.GetAllRequestsAsync(searchTerm, page);
             return StatusCode(response.StatusCode, response);
@@ -44,7 +44,7 @@ namespace ExamenLenguajes.Controllers
         }
 
         [HttpPut("{id}")]
-		[Authorize(Roles = $"{RolesConstant.EMPLOYEE}")]
+		[Authorize(Roles = $"{RolesConstant.HUMAN_RESOURCES}")]
 		public async Task<ActionResult<ResponseDto<RequestDto>>> Edit(RequestEditDto dto, Guid id)
         {
             var response = await _requestsService.EditRequestAsync(dto, id);
@@ -52,7 +52,7 @@ namespace ExamenLenguajes.Controllers
         }
 
         [HttpDelete("{id}")]
-		[Authorize(Roles = $"{RolesConstant.EMPLOYEE}")]
+		[Authorize(Roles = $"{RolesConstant.EMPLOYEE}, {RolesConstant.HUMAN_RESOURCES}")]
 		public async Task<ActionResult<ResponseDto<RequestDto>>> Delete(Guid id)
         {
             var response = await _requestsService.DeleteRequestAsync(id);
